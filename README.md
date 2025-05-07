@@ -1,6 +1,10 @@
 # DDP-ehf
 KEST2NL05EU LOKAVERKEFNI
 
+Byrja á að installa CentOS en það virkar ekki vegna M1 örgjörva og UTM stuðnings. þannig ég nota bara 3 Debian í staðinn (Ubuntu)
+Geri 3 Virtual Machine sem heita: server1.ddp.is, client1.ddp.is, client2.ddp.is
+
+
 Netstillingar.
 Breyti Shared Network -> Bridged
 ip a sem sýnir mér að netkortið heitir enp0s1
