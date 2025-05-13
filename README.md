@@ -28,7 +28,6 @@ sudo vi /etc/netplan/01-netcfg.yaml skilar mér:
 
 sudo: unable to resolve host server.ddp.is: Temporary failure in name resolution... okay breyti skránni með config2.
 
-
 sudo netplan apply skilar mér aftur fullt af WARNINGS... curl google.com skilar ekki ennþá neinu. 
 cat /etc/resolv.conf 
 nameserver 127.0.0.53 en ekki 1.1.1.1
@@ -38,6 +37,18 @@ hostname
 server.ddp.is
 Ég þarf að breyta þessu í server1.ddp.is sem ég geri, núna virkar t.d sudo echo test
 
+Núna clone-a ég server1.ddp.is tvisvar og skýri þær client1.ddp.is & client2.ddp.is
+Ræsi client.ddp.is og skrifa í terminal:
 
+sudo hostnamectl set-hostname client1.ddp.is
+
+sudo vi /etc/hosts
+
+Breyti í eftirfarandi:
+127.0.1.1   client1.ddp.is client1 (var server1.ddp.is server1)
+192.168.100.11 client1.ddp.is client1 (var server1.ddp.is server1)
+
+cat /etc/netplan/01-netcfg.yaml
+sudo vi /etc/netplan/01-netcfg.yaml og set config3 í staðinn.
 
 
