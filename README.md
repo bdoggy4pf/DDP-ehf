@@ -11,16 +11,8 @@ ip a sem sýnir mér að netkortið heitir enp0s1
 sudo nano /etc/netplan/01-netcfg.yaml
 En nano gefur mér villuna command not found... reyni að gera update/upgrade en virkar ekki.
 
-sudo vi /etc/netplan/01-netcfg.yaml virkar, set þetta í skjalið;
+sudo vi /etc/netplan/01-netcfg.yaml virkar, set config1 í skjalið
 
-network:
-  version: 2
-  ethernets:
-    enp0s1:
-      addresses: [192.168.100.10/24]
-      gateway4: 192.168.100.1
-      nameservers:
-        addresses: [1.1.1.1, 8.8.8.8]
 
 geri sudo netplan apply en virkar ekki
 ip a segir mér svo að enp0s1 er ekki með 192.168.100.10.
