@@ -52,3 +52,9 @@ cat /etc/netplan/01-netcfg.yaml
 sudo vi /etc/netplan/01-netcfg.yaml og set config3 í staðinn.
 sudo netplan apply
 
+
+sudo apt update virkar ekki ennþá.. skoða error msg
+connect (101: Network is unreachable)
+Could not connect to ports.ubuntu.com
+Hún er augljóslega ekki að tengjast neti, eftir meiri skoðun kemst ég að því að það er vegna Bridged Networks.
+Eins og flest allt annað virkar ekki Bridged Networks á M1 Mac + UTM. Ég neyðist til að breyta aftur í Shared Network á meðan ég installa.
