@@ -60,3 +60,8 @@ Hún er augljóslega ekki að tengjast neti, eftir meiri skoðun kemst ég að �
 Eins og flest allt annað virkar ekki Bridged Networks á M1 Mac + UTM. Ég neyðist til að breyta aftur í Shared Network á meðan ég installa.
 
 EKkert virkar ennþá, er að nota config2 ennþá og breyti því í 3. (DHCP)
+sudo vi /etc/netplan/01-netcfg.yaml
+sudo netplan apply
+ip a
+Ekkert virkar >:)
+Reyni að gera? sudo dhclient -v enp0s1 en það virkar ekki...
