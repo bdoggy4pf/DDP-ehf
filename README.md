@@ -50,5 +50,5 @@ Breyti í eftirfarandi:
 
 cat /etc/netplan/01-netcfg.yaml
 sudo vi /etc/netplan/01-netcfg.yaml og set config3 í staðinn.
-
+sudo netplan apply
 
