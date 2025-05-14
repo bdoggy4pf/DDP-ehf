@@ -19,11 +19,24 @@ geri sudo netplan apply en virkar ekki ip a segir mér svo að enp0s1 er ekki me
 
 Hostname & Domain. 
 sudo hostnamectl set-hostname server1.ddp.is 
-sudo vi /etc/hosts en lendi í villum. ég leiðrétti þær og set 192.168.100.10 server1.ddp.is server1 Reyni að pinga server1.ddp.is en ping er not found?! sudo apt upgrade og sudo apt update gerir ekkert fyrir mig... Til að checka á overall nettengingu geri geri ég curl google.com en fæ: Could not resolve host: google.com sudo vi /etc/netplan/01-netcfg.yaml skilar mér:
+sudo vi /etc/hosts en lendi í villum. ég leiðrétti þær og set 192.168.100.10 server1.ddp.is server1 
+Reyni að pinga server1.ddp.is en ping er not found?! 
+sudo apt upgrade og sudo apt update gerir ekkert fyrir mig... 
+Til að checka á overall nettengingu geri geri ég curl google.com
+
+Could not resolve host: google.com 
+
+sudo vi /etc/netplan/01-netcfg.yaml skilar mér:
 
 sudo: unable to resolve host server.ddp.is: Temporary failure in name resolution... okay breyti skránni með config2.
 
-sudo netplan apply skilar mér aftur fullt af WARNINGS... curl google.com skilar ekki ennþá neinu. cat /etc/resolv.conf nameserver 127.0.0.53 en ekki 1.1.1.1 sudo systemctl restart systemd-resolved sudo: unable to resolve host server.ddp.is: Temporary failure in name resolution hostname server.ddp.is Ég þarf að breyta þessu í server1.ddp.is sem ég geri, núna virkar t.d sudo echo test
+sudo netplan apply skilar mér aftur fullt af WARNINGS... 
+curl google.com skilar ekki ennþá neinu. 
+cat /etc/resolv.conf nameserver 
+127.0.0.53 en ekki 1.1.1.1 
+sudo systemctl restart systemd-resolved
+sudo: unable to resolve host server.ddp.is: Temporary failure in name resolution hostname server.ddp.is 
+Ég þarf að breyta þessu í server1.ddp.is sem ég geri, núna virkar t.d sudo echo test
 
 Núna clone-a ég server1.ddp.is tvisvar og skýri þær client1.ddp.is & client2.ddp.is Ræsi client.ddp.is og skrifa í terminal:
 
@@ -33,8 +46,16 @@ sudo vi /etc/hosts
 
 Breyti í eftirfarandi: 127.0.1.1 client1.ddp.is client1 (var server1.ddp.is server1) 192.168.100.11 client1.ddp.is client1 (var server1.ddp.is server1)
 
-cat /etc/netplan/01-netcfg.yaml sudo vi /etc/netplan/01-netcfg.yaml og set config3 í staðinn. sudo netplan apply
+cat /etc/netplan/01-netcfg.yaml 
+sudo vi /etc/netplan/01-netcfg.yaml og set config3 í staðinn. sudo netplan apply
 
-sudo apt update virkar ekki ennþá.. skoða error msg connect (101: Network is unreachable) Could not connect to ports.ubuntu.com Hún er augljóslega ekki að tengjast neti, eftir meiri skoðun kemst ég að því að það er vegna Bridged Networks. Eins og flest allt annað virkar ekki Bridged Networks á M1 Mac + UTM. Ég neyðist til að breyta aftur í Shared Network á meðan ég installa.
+sudo apt update virkar ekki ennþá.. skoða error msg 
+connect (101: Network is unreachable) Could not connect to ports.ubuntu.com 
+Hún er augljóslega ekki að tengjast neti, eftir meiri skoðun kemst ég að því að það er vegna Bridged Networks. 
+Eins og flest allt annað virkar ekki Bridged Networks á M1 Mac + UTM. Ég neyðist til að breyta aftur í Shared Network á meðan ég installa.
 
-EKkert virkar ennþá, er að nota config2 ennþá og breyti því í 3. (DHCP) sudo vi /etc/netplan/01-netcfg.yaml sudo netplan apply ip a Ekkert virkar >:) Reyni að gera? sudo dhclient -v enp0s1 en það virkar ekki...
+EKkert virkar ennþá, er að nota config2 ennþá og breyti því í 3. (DHCP) 
+sudo vi /etc/netplan/01-netcfg.yaml 
+sudo netplan apply 
+ip a en ekkert virkar >:) Reyni að gera? 
+sudo dhclient -v enp0s1 en það virkar ekki...
