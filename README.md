@@ -51,4 +51,23 @@ different departments as shown in the Users file.
       Sem að staðfestir að Hostname er breytt. 
 
 
+2. Configure server1 with static IP Address, from the IP Address block 192.168.100.0/24. The server must be configured with the 10th usable IP Address.
+   2.1 Skrifa í terminal
+         sudo vi /etc/netplan/01-netcfg.yaml
+      Set inn eftirfarandi í skrá:
+            network:
+              version: 2
+              ethernets:
+                enp0s1:
+                  addresses:
+                    - 192.168.100.10/24 # þetta er static IP með subnet mask /24 (sem er 255.255.255.0)
+
+   2.2 Gera í terminal:
+         sudo netplan apply
+         ip a
+      Þetta ætti að sýna mer:
+         192.168.100.10/24 & 192.168.100.255
+      og svo í framhaldi myndi ég prófa ping / curl til að staðfesta...
+   
+
     
