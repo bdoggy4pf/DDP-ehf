@@ -145,6 +145,8 @@ different departments as shown in the Users file.
          Vona eftir svarinu:
             Name: server1.ddp.is
             Address: 192.168.100.10
+   
+5. Create the users accounts using a script, see the Users file.
 
 
     
