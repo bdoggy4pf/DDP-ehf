@@ -68,6 +68,83 @@ different departments as shown in the Users file.
       Þetta ætti að sýna mer:
          192.168.100.10/24 & 192.168.100.255
       og svo í framhaldi myndi ég prófa ping / curl til að staðfesta...
+
+3. Install and configure DHCP on server1, so both clients get IP Addresses, Gateway, DNS IP address and domain name automatically via HDCP.
+   3.1 Byrja á að installa DHCP:
+      sudo apt install isc-dhcp-server
+   3.2 Skoða hvaða netkort þjónar DHCP
+      sudo vi /etc/default/isc-dhcp-server
+      - Set inn: INTERFACESv4="enp0s1" (Netkort sem er oftast notað í UTM, eða amk í mínu tilfellli..)
+   3.3. Stilla DHCP config.
+      sudo vi /etc/dhcp/dhcpd.conf
+   Set eftirfarandi í skrá:   
+         subnet 192.168.100.0 netmask 255.255.255.0 {
+           range 192.168.100.50 192.168.100.100;
+           option routers 192.168.100.1;
+           option domain-name-servers 1.1.1.1, 8.8.8.8;
+           option domain-name "ddp.is";
+           default-lease-time 600;
+           max-lease-time 7200;
+         }
+
+      #Þetta config gefur IP bilinu 192.168.100.50–10 og setur gateway, DNS og domain sjálfkrafa með. 
+   3.4 Keyra þetta í gang.
+      sudo systemctl enable isc-dhcp-server
+      sudo systemctl restart isc-dhcp-server   
+   3.5 Fara í client1 & client2 og breyta /etc/netplan/01-netcfg.yaml:
+      network:
+        version: 2
+        ethernets:
+          enp0s1:
+            dhcp4: true
    
+      -Keyra svo sudo netplan apply
+
+   3.6 Samantekt...
+      server1 er kominn með isc-dhcp-server og gefur IP-tölur á bilinu 192.168.100.50–100,
+      með netmask 255.255.255.0, gateway 192.168.100.1, DNS 1.1.1.1 og 8.8.8.8, og domain ddp.is.
+
+4. Install and configure DNS server on server1, so Hostnames are resolved to IP Addresses.
+   4.1 Setja upp DNS
+      sudo apt install bind9 bind9utils bind9-doc
+   4.2 Gera "zone" fyrir ddp.is
+      sudo nano /etc/bind/named.conf.local
+      - og bæta við neðst:
+         zone "ddp.is" {
+           type master;
+           file "/etc/bind/db.ddp.is";
+         };
+   4.3 Copya template skrá og breyta aðeins..
+      sudo cp /etc/bind/db.local /etc/bind/db.ddp.is
+      sudo nano /etc/bind/db.ddp.is
+         -Breyta innihaldinu svona:
+           $TTL    604800
+            @       IN      SOA     server1.ddp.is. root.ddp.is. (
+                                          2         ; Serial
+                                     604800         ; Refresh
+                                      86400         ; Retry
+                                    2419200         ; Expire
+                                     604800 )       ; Negative Cache TTL
+            @       IN      NS      server1.ddp.is.
+            server1 IN      A       192.168.100.10
+            client1 IN      A       192.168.100.11
+            client2 IN      A       192.168.100.12
+        
+      -Þetta leyfir öllum vélum í netinu að spyrja DNS þjóninn server1 um þessi nöfn og fá réttar IP-tölur. (ATH að innihaldið er örugglega ekki 100% accurate.)
+   
+   4.4 Restarta DNS
+      sudo systemctl restart bind9
+   4.5 Láta clients nota server1 sem DNS.
+      Fara í dhcpd.conf og breyta:
+         option domain-name-servers 192.168.100.10;
+      Gera svo:
+         sudo systemctl restart isc-dhcp-server
+   4.6 Prófun fyrir client1:
+      nslookup server1.ddp.is
+      nslookup client2.ddp.is
+         Vona eftir svarinu:
+            Name: server1.ddp.is
+            Address: 192.168.100.10
+
 
     
