@@ -225,7 +225,25 @@ must synchronize their time with the server.
 9. Install and configure syslog server on server1, server1 should get logs from both the clients for
 proactive management and monitoring.
 
-   9.1 Opna
+   9.1 Fyrir server1, opna:
+      sudo nano /etc/rsyslog.conf
+   9.2 Breyta svo rsyslog getur hlustað á UDP og TCP port 514 (default syslog port).
+      #module(load="imudp")
+      #input(type="imudp" port="514")
+      
+      #module(load="imtcp")
+      #input(type="imtcp" port="514")
+   
+      (eina sem ég breyti er að setja # fyrir framan)
+   9.3 Bæta við í endan (þetta vistar öll skilaboð frá öðrum vélum í /var/log/remote/nafnvélar.log):
+      $template RemoteLogs,"/var/log/remote/%HOSTNAME%.log"
+      *.* ?RemoteLogs
+   
+   9.4 Búa til möppu sem heldur utan um client logs
+      sudo mkdir /var/log/remote
+   9.5 Restart rsyslog
+      sudo systemctl restart rsyslog
+
    
 
 
