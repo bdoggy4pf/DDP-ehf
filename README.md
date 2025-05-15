@@ -147,13 +147,46 @@ different departments as shown in the Users file.
             Address: 192.168.100.10
    
 5. Create the users accounts using a script, see the Users file.
-   Keyra skrá (getur séð skránna á github): 
+   5.1 Keyra add_users.sh (getur séð skránna á GitHub): 
       chmod +x add_users.sh
       sudo ./add_users.sh
-   Checka:
+   
+      Checka:
       id AndFri
       getent group Framkvaemdadeild
 
+6. Install and configure MySQL on server1 and create Human Resource database. The database
+   stores information about employees, employees are identified by their Kennitala, Firstname,
+   Lastname, Email, phone Number, hire date and salary. Employees work in Departments where
+   each department has one manager, departments are identified by department ID, department
+   name. Each department is in a different location. Locations are identified by their location ID, city,
+   Address, and zip code. One or more employees work in different jobs, and the jobs are identified
+   by Job ID, job title, Min salary and max salary.
 
+   6.1 Byrja á að setja upp MySQL
+      sudo apt update
+      sudo apt install -y mysql-server
+      sudo mysql_secure_installation (mælt með en ekkert endilega nauðsynlegt fyrir verkefnið..)
+
+   6.2 Keyra human_resource.sql skránna. (Getur séð hana á GitHub.)
+         sudo mysql -u root -p #Skipta yfir í MySQL-skel
+         SOURCE /full/path/to/human_resource.sql; #loada þessu upp
+         SHOW TABLES IN human_resource; #til að staðfesta
+   6.3 Dæmi til að prófa fyrir frekari staðfestingu.
+      -- Bæta við staðsetningu\INSERT INTO Locations VALUES (1, 'Reykjavík', 'Borgartún 1', '101');
+
+      -- Bæta við starfi
+      INSERT INTO Jobs VALUES (100, 'Forritari', 350000.00, 700000.00);
+      
+      -- Bæta við deild (ákveða manager_id seinna)
+      INSERT INTO Departments VALUES (10, 'Tolvudeild', 1, 1010);
+      
+      -- Bæta við starfsmanni (mætir gagnaskipan)
+      INSERT INTO Employees VALUES
+      (1010, 'Andri Mar', 'Fridriksson', 'AndFri', 'amf@ddp.is', '777-1000', '2024-05-15', 450000.00, 10, 100);
+      
+      -- Skoða innihald Employee töflu
+      SELECT * FROM Employees;
+      
 
     
