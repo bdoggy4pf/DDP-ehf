@@ -1,43 +1,45 @@
 -- human_resource.sql
 
--- 2.1 Búa til gagnagrunn
+-- 3.1 Búa til gagnagrunn
 CREATE DATABASE IF NOT EXISTS human_resource;
 USE human_resource;
 
--- 2.2 Tafla: Staðsetningar
+-- 3.2 Tafla: Staðsetningar
 CREATE TABLE IF NOT EXISTS Locations (
   location_id INT PRIMARY KEY,
-  city VARCHAR(100),
-  address VARCHAR(200),
-  zip_code VARCHAR(20)
+  city VARCHAR(100) NOT NULL,
+  address VARCHAR(200) NOT NULL,
+  zip_code VARCHAR(20) NOT NULL
 );
 
--- 2.3 Tafla: Deildir
+-- 3.3 Tafla: Deildir
 CREATE TABLE IF NOT EXISTS Departments (
   department_id INT PRIMARY KEY,
-  department_name VARCHAR(100),
+  department_name VARCHAR(100) NOT NULL,
   location_id INT NOT NULL,
-  manager_kennitala CHAR(10),
-  FOREIGN KEY (location_id) REFERENCES Locations(location_id)
+  manager_id INT NOT NULL,
+  FOREIGN KEY (location_id) REFERENCES Locations(location_id),
+  FOREIGN KEY (manager_id) REFERENCES Employees(employee_id)
 );
 
--- 2.4 Tafla: Störf
+-- 3.4 Tafla: Störf
 CREATE TABLE IF NOT EXISTS Jobs (
   job_id INT PRIMARY KEY,
-  job_title VARCHAR(100),
-  min_salary DECIMAL(10,2),
-  max_salary DECIMAL(10,2)
+  job_title VARCHAR(100) NOT NULL,
+  min_salary DECIMAL(10,2) NOT NULL,
+  max_salary DECIMAL(10,2) NOT NULL
 );
 
--- 2.5 Tafla: Starfsmenn
+-- 3.5 Tafla: Starfsmenn
 CREATE TABLE IF NOT EXISTS Employees (
-  kennitala CHAR(10) PRIMARY KEY,
-  firstname VARCHAR(50),
-  lastname VARCHAR(50),
-  email VARCHAR(100),
+  employee_id INT PRIMARY KEY,
+  first_name VARCHAR(50) NOT NULL,
+  last_name VARCHAR(50) NOT NULL,
+  username VARCHAR(50) NOT NULL UNIQUE,
+  email VARCHAR(100) NOT NULL UNIQUE,
   phone VARCHAR(20),
-  hire_date DATE,
-  salary DECIMAL(10,2),
+  hire_date DATE NOT NULL,
+  salary DECIMAL(10,2) NOT NULL,
   department_id INT NOT NULL,
   job_id INT NOT NULL,
   FOREIGN KEY (department_id) REFERENCES Departments(department_id),
