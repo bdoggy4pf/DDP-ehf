@@ -221,6 +221,11 @@ must synchronize their time with the server.
       sudo systemctl enable ntp
    8.8 Prófa/staðfesti tengingu
       ntpq -p #server1 ætti að birtast
+
+9. Install and configure syslog server on server1, server1 should get logs from both the clients for
+proactive management and monitoring.
+
+   9.1 Opna
    
 
 
