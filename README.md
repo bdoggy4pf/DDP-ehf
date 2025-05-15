@@ -147,6 +147,13 @@ different departments as shown in the Users file.
             Address: 192.168.100.10
    
 5. Create the users accounts using a script, see the Users file.
+   Keyra skrá (getur séð skránna á github): 
+      chmod +x add_users.sh
+      sudo ./add_users.sh
+   Checka:
+      id AndFri
+      getent group Framkvaemdadeild
+
 
 
     
