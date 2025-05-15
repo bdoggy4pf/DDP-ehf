@@ -183,7 +183,7 @@ different departments as shown in the Users file.
       
       -- Bæta við starfsmanni (mætir gagnaskipan)
       INSERT INTO Employees VALUES
-      (1010, 'Andri Mar', 'Fridriksson', 'AndFri', 'amf@ddp.is', '777-1000', '2024-05-15', 450000.00, 10, 100);
+      (1010, 'Bjarni Dagur', 'Akason', 'Bdog', 'bda@ddp.is', '777-1000', '2024-05-15', 450000.00, 10, 100);
       
       -- Skoða innihald Employee töflu
       SELECT * FROM Employees;
