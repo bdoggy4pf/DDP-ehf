@@ -187,6 +187,41 @@ different departments as shown in the Users file.
       
       -- Skoða innihald Employee töflu
       SELECT * FROM Employees;
-      
+
+7. Due to data loss the company policy requires backups weekly, as system engineer you are required
+to schedule backups of home directories to run weekly at midnight each Friday.
+
+   7.1 Notum cron jobs í þetta, notum tar til að safna öllu í skrá.
+      tar -czf /var/backups/home_backup_$(date +\%F).tar.gz /home
+      - sem save-ar allt í t.d. /var/backups/home_backup_2025-05-15.tar.gz
+   7.2 Látum keyra þetta alla föstudaga um miðnætti.
+      sudo crontab -e
+      0 0 * * 5 tar -czf /var/backups/home_backup_$(date +\%F).tar.gz /home
+
+8. Install and configure NTP on server1 and clients, server1 must be master server and client
+must synchronize their time with the server.
+
+   8.1 Fer í allar vélar og geri:
+      sudo apt install ntp
+   8.2 Stilla server1 sem NTP master
+      sudo nano /etc/ntp.conf
+   8.3 Hætta að nota ytri NTP
+      set # fyrir framan línur eins og pool 0.ubuntu.pool.ntp.org iburst
+   8.4 Bæta við „local clock“ sem master
+      server 127.127.1.0
+      fudge 127.127.1.0 stratum 10
+   8.5 Restart
+      sudo systemctl restart ntp
+      sudo systemctl enable ntp
+   8.6 Stilla client1 og client2 til að nota server1
+      sudo nano /etc/ntp.conf
+      server 192.168.100.10 iburst #bæti þessu við
+   8.7 Restarta á clients
+      sudo systemctl restart ntp
+      sudo systemctl enable ntp
+   8.8 Prófa/staðfesti tengingu
+      ntpq -p #server1 ætti að birtast
+   
+
 
     
