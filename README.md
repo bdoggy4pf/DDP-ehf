@@ -225,8 +225,8 @@ must synchronize their time with the server.
 9. Install and configure syslog server on server1, server1 should get logs from both the clients for
 proactive management and monitoring.
 
-   9.1 Fyrir server1, opna:
-      sudo nano /etc/rsyslog.conf
+   9.1 Fyrir syslog á server1, opna:
+      sudo nano /etc/rsyslog.conf #þetta er pre-installað á Ubuntu.
    9.2 Breyta svo rsyslog getur hlustað á UDP og TCP port 514 (default syslog port).
       #module(load="imudp")
       #input(type="imudp" port="514")
@@ -244,6 +244,23 @@ proactive management and monitoring.
    9.5 Restart rsyslog
       sudo systemctl restart rsyslog
 
+   NÆSTA SKREF - Senda logs frá clients til servers.
+   9.2.1 Opna;
+      sudo nano /etc/rsyslog.conf
+      Bæta við neðst til að senda öll logs með UDP á server1 (192.168.100.10):
+         *.* @192.168.100.10:514
+      Ef ég vildi nota TCP í staðinn þá væri það:
+         Ef þú vilt nota TCP í stað UDP:
+         *.* @@192.168.100.10:514
+   9.2.2 Restarta
+      sudo systemctl restart rsyslog
+   9.2.3 Testa þetta á server1:
+      ls /var/log/remote/
+      - Ætti að skila mér:
+        client1.log
+        client2.log
+
+10. 
    
 
 
