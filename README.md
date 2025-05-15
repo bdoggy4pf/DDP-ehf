@@ -4,7 +4,7 @@ KEST2NL05EU LOKAVERKEFNI
 !!! EKKI LESA SEM PREVIEW, LESTU SEM CODE !!!
 
 Ég byrjaði á þessu verkefni með UTM, eftir endalaus vandamál er ég hér. (UTM-Report fyrir original skýrsluna) 
-Ég mun ekki beint framkvæma verkefnið heldur skrifa skýrslu um hvernig ég myndi leysa verkefnið, þar sem ég get ekki beint sannreynt það.
+Ég mun ekki beint framkvæma verkefnið heldur skrifa skýrslu um hvernig ég myndi leysa verkefnið.
 Þar sem ég framkvæmi þetta ekki í raun, gæti uppsetningin verið of einföld og/eða án villuleiðréttinga... þannig þetta líklegast verður ekki 100% rétt.
 
 #VERKEFNISLÝSING
