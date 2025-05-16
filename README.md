@@ -260,8 +260,24 @@ proactive management and monitoring.
         client1.log
         client2.log
 
-10. 
-   
+10. Install and configure Postfix on server1, so users can send and receive emails using Round Cube
+open-source software.
+   10.1 Fyrir server1:
+    sudo apt install postfix
+      -Vel Internet Site
+       -Nota ddp.is sem mail name (domain)
+   10.2 Checka á /etc/postfix/main.cf ef þarf
+   10.3 Restart postfix
+       sudo systemctl restart postfix
+   10.4 RoundCube:
+       Þetta command installar Roundcube & Apache samstundis. (með öllum php pökkum)
+       sudo apt install apache2 php php-mbstring php-xml php-intl php-mysql php-common php-curl php-zip php-bz2 php-gd php-imagick php-cli php-json php-ldap php-soap php-          sqlite3 roundcube
+         - Nota apache2 sem server með dbconfig-common og set svo upp Roundcube með SQLite.
+    10.5 Prófun.
+       Ætti að virka t.d. http://192.168.100.10/roundcube
+       Innskráning: notandi á kerfinu (t.d. user1)
+       Netfang: user1@ddp.is
+    
 
 
     
