@@ -277,7 +277,65 @@ open-source software.
        Ætti að virka t.d. http://192.168.100.10/roundcube
        Innskráning: notandi á kerfinu (t.d. user1)
        Netfang: user1@ddp.is
-    
 
+11.  Install and configure shared printers for each group, only users that belong to the group should
+    print only, accept IT and Management groups should print and manage the printers.
+   11.1 Setja upp CUPS á server1.
+     sudo apt install cups
+   11.2 Bæta server1 við prenthópinn:
+       sudo usermod -aG lpadmin $USER
+   11.3 Aðgengi yfir netið.
+        sudo nano /etc/cups/cupsd.conf
+   11.4 Restart
+       sudo systemctl restart cups
+   11.5. Búa til groups & færa til.
+        sudo groupadd finance
+        sudo groupadd marketing
+        sudo groupadd it
+        sudo groupadd management
+        sudo usermod -aG finance alice
+        sudo usermod -aG it bob
+   11.6 Fyrir hvern prentara, stilla svona (https://server1.ddp.is:631);
+  <Printer finance-printer>
+     ...
+     AllowGroup finance
+     AllowGroup it
+     AllowGroup management
+   </Printer>
+   11.7 Bæti við users
+     sudo usermod -aG lpadmin ituser
+     sudo usermod -aG lpadmin mgruser
 
-    
+12. For security reasons, install and configure SSH on the server and clients, SSH login should    use RSA keys instead of password authentication.
+    12.1 Fyrir server1, client1 og client2:
+       sudo apt install openssh-server
+    12.2 Búa til RSA lykla á client1 t.d.
+       ssh-keygen -t rsa
+    12.3 copy-a lykil yfir á server1
+       ssh-copy-id ubuntu@server1.ddp.is
+    12.4 Slökkva á pw login á server1.
+       sudo nano /etc/ssh/sshd_config
+      PasswordAuthentication no Breyta í -> PubkeyAuthentication yes
+       & passa að þetta sé svona: PubkeyAuthentication yes 
+      sudo systemctl restart ssh
+   12.5 Prófa
+    ssh ubuntu@server1.ddp.is
+13.  All unused ports should be closed, use NMAP for testing.
+    13.1 Skoða opin port á server1:
+     sudo ss -tuln
+    13.2 Setja upp ufw (Firewall)
+     sudo apt install ufw
+    13.3 Configuration..
+       sudo ufw default deny incoming
+       sudo ufw default allow outgoing
+    og:
+      sudo ufw allow 22       # SSH
+      sudo ufw allow 25       # Postfix
+      sudo ufw allow 53       # DNS
+      sudo ufw allow 631      # CUPS (ef notað)
+      sudo ufw allow 514      # Syslog
+    13.4 Virkja svo: sudo ufw enable
+    13.5 Prófa með nmap á client1:
+       sudo apt install nmap
+       nmap -sS 192.168.100.10
+     
