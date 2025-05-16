@@ -296,6 +296,7 @@ open-source software.
         sudo usermod -aG finance alice
         sudo usermod -aG it bob
    11.6 Fyrir hvern prentara, stilla svona (https://server1.ddp.is:631);
+     
   <Printer finance-printer>
      ...
      AllowGroup finance
@@ -306,7 +307,7 @@ open-source software.
      sudo usermod -aG lpadmin ituser
      sudo usermod -aG lpadmin mgruser
 
-12. For security reasons, install and configure SSH on the server and clients, SSH login should    use RSA keys instead of password authentication.
+13. For security reasons, install and configure SSH on the server and clients, SSH login should    use RSA keys instead of password authentication.
     12.1 Fyrir server1, client1 og client2:
        sudo apt install openssh-server
     12.2 Búa til RSA lykla á client1 t.d.
@@ -320,7 +321,7 @@ open-source software.
       sudo systemctl restart ssh
    12.5 Prófa
     ssh ubuntu@server1.ddp.is
-13.  All unused ports should be closed, use NMAP for testing.
+14.  All unused ports should be closed, use NMAP for testing.
     13.1 Skoða opin port á server1:
      sudo ss -tuln
     13.2 Setja upp ufw (Firewall)
